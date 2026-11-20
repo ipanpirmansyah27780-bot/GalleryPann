@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- IDENTITAS WEBSITE -->
+   <title>GalleryPann - Penyimpanan Foto Online</title>
+
+   <!-- DESKRIPSI UNTUK GOOGLE -->
+    <meta name="description"
+    content="GalleryPann adalah aplikasi penyimpanan foto online. simpan, kelola, dan akses koleksi foto dengan mudah kapan saja.">
+
+    <!-- PENGATURAN GOOGLE -->
+     <meta name="robots" content="index, follow">
+
+     <!-- WARNA TEMA WWEBSITE -->
+      <meta name="theme-color" content="#2563eb">
+
+      <link rel="stylesheet" href="style.css">
+      <link rel="manifest" href="manifest.json">
+      <link rel="apple-touch-icon" href="/icon-512.png">
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-icon">GP</span>
+      <span>GalleryPann</span>
+    </a>
+    <button id="btnLogout" class="btn btn-light hidden">
+      Keluar
+    </button>
+  </header>
+
+  <main class="container">
+
+    <!-- HALAMAN LOGIN -->
+    <section id="authSection" class="auth-card">
+      <div class="hero-icon">☁️</div>
+      <p class="eyebrow">PENYIMPANAN FOTO ONLINE</p>
+      <h1>Selamat Datang</h1>
+      <p class="muted">
+        Simpan kenanganmu dengan aman di cloud.
+      </p>
+
+      <form id="authForm">
+        <label for="email">Email</label>
+        <input id="email" type="email"
+          placeholder="nama@email.com" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password"
+          placeholder="Minimal 6 karakter" minlength="6" required>
+
+        <button id="btnAuth" class="btn btn-primary" type="submit">
+          Masuk
+        </button>
+      </form>
+
+        <!-- TOMBOL LUPA PASSWORD -->
+        <p class="forgot-password">
+          <button 
+            type="button"
+            id="btnLupaPassword" 
+            class="text-button"
+            >
+            Lupa Password
+          </button>
+        </p>
+        <p id="authMessage" class="message" role="status"></p>
+
+        <!-- TOMBOL DAFTAR AKUN -->
+         <p class="switch-text">
+          Belum Punya Akun?
+          <button
+             id="btnSwitchAuth" 
+             class="text-button" 
+             type="button"
+             >
+            Daftar
+          </button>
+        </p>
+    </section>
+
+    <!-- DASHBOARD GALERI -->
+    <section id="gallerySection" class="hidden">
+
+      <div class="welcome">
+        <div>
+          <p class="eyebrow">RUANG PENYIMPANAN PRIBADI</p>
+          <h1>Galeri Foto</h1>
+          <p class="muted">
+            Semua momen berharga dalam satu tempat.
+          </p>
+        </div>
+        <div class="cloud-badge">☁️ Cloud aktif</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <span>Total Foto</span>
+          <strong id="totalPhotos">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Total Album</span>
+          <strong id="totalAlbums">0</strong>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Unggah Foto</h2>
+        <form id="uploadForm">
+          <label for="photoFiles">Pilih foto</label>
+          <input id="photoFiles" type="file"
+            accept="image/*" multiple required>
+
+          <label for="uploadAlbum">Simpan ke album</label>
+          <select id="uploadAlbum">
+            <option value="">Tanpa album</option>
+          </select>
+
+          <button id="btnUpload" class="btn btn-primary" type="submit">
+            + Unggah Foto
+          </button>
+        </form>
+        <p class="hint">Maksimal 10 MB per foto.</p>
+        <p id="uploadMessage" class="message" role="status"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Buat Album Baru</h2>
+        <form id="albumForm" class="album-form">
+          <input id="albumName" type="text"
+            placeholder="Contoh: foto ipan"
+            maxlength="60" required>
+          <button class="btn btn-primary" type="submit">
+            + Buat Album
+          </button>
+        </form>
+        <p id="albumMessage" class="message" role="status"></p>
+      </div>
+
+      <div class="gallery-heading">
+        <div>
+          <h2>Koleksi Saya</h2>
+          <p class="muted">Pilih album untuk menyaring foto.</p>
+        </div>
+        <select id="filterAlbum" aria-label="Filter album">
+          <option value="">Semua foto</option>
+        </select>
+      </div>
+
+      <div id="photoGallery" class="photo-grid"></div>
+      <p id="galleryMessage" class="message" role="status"></p>
+
+    </section>
+  </main>
+
+  <footer>
+    GalleryPann * Simpan kenangan, kapan saja.
+  </footer>
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+
+  <script>
+    if ("ServiceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js")
+        .then(() => console.log("GalleryPann siap dipasang!"))
+        .catch((error) => console.error("service worker gagal:", error));
+      });
+    }
+  </script>
+</body>
+</html>
